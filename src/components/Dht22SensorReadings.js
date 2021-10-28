@@ -5,8 +5,8 @@ const Dht22SensorReadings = ({device, http, httpAction, tile, useHttp, useInterv
 
     const device_state = useSelector(state => state.DeviceController.data[tile.id], shallowEqual) || {}
     const user = useSelector(state => state.User)
-    const temperature = Math.round((device_state.temperature * 9/5 + 32) * 10) / 10 || 0
-    const humidity = Math.round(device_state.humidity * 10) / 10 || 0
+    const temperature = Math.round((device_state[http['get_reading']]?.temperature * 9/5 + 32) * 10) / 10 || 0
+    const humidity = Math.round(device_state[http['get_reading']]?.humidity * 10) / 10 || 0
     const dispatch = useDispatch()
 
     let backgroundColor = 'cyan'
@@ -63,27 +63,34 @@ const Dht22SensorReadings = ({device, http, httpAction, tile, useHttp, useInterv
         padding: 0, 
         margin: 10, 
         backgroundColor, 
-        width: 90, 
-        height: 90
+        width: 110, 
+        height: 110
     }
 
     const temp_style = {
         textShadow: '1px 1px #2b2b2b',
         position: 'absolute', 
-        top: 43, 
+        top: 50, 
         left: '%50',
         transform: 'translate(-50%, -50%)'
     }
 
+    if(!device_state[http['get_reading']]) {
+        return (
+            <div className="txt_center"><br />
+                <div className="button_loader button_loader_l"></div>
+                <p>Getting Data...</p>
+            </div>
+        )
+    }
+
     return (
         <div className="txt_center">
-            <div>
-                <span className="circ" style={circle_style} title="Current Temperature">
-                    <span style={temp_style}>{temperature}</span>
-                </span>
+            <div className="circ" style={circle_style} title="Current Temperature">
+                <span style={temp_style}>{temperature}</span>
             </div>
             <div>
-                <span title="Temperature" style={{color: backgroundColor}}>{temperature}&deg;F</span> / <span title="Humidity">%{humidity}</span>
+                <span title="Current Temperature" style={{color: backgroundColor}}>{temperature}&deg;F</span> / <span title="Current Humidity">{humidity}%</span>
             </div>
         </div>
     )

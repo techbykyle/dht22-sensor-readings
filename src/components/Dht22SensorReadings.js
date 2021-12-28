@@ -15,7 +15,7 @@ const Dht22SensorReadings = ({device, http, httpAction, tile, useHttp, useInterv
 
     useInterval(() => {
         httpAction(dispatch, user.token, device.id, tile.id, http['get_reading'])
-    }, 30000)
+    }, 60000)
 
     if(temperature <= 0) {
         backgroundColor = '#7293c9'

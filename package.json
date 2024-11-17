@@ -1,7 +1,7 @@
 {
   "name": "dht22-sensor-readings",
   "federated-module-name": "Dht22SensorReadings",
-  "version": "0.0.6",
+  "version": "0.0.9",
   "description": "Display in real time, sensor readings from a DHT22 connected to a Pi's GPIO pins",
   "main": "index.js",
   "scripts": {
